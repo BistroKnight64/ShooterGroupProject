@@ -14,10 +14,14 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D PlayerRB;
     // shoot key
     public KeyCode shootKey;
-
+    // Animator
+    private Animator Anim;
     //bool
     private bool canShoot = true;
-
+    private bool IsWalking = false;
+    // is facing LEFT side
+    private bool IsFacingSide = false;
+    private bool IsFacingFront = false;
     //game objects
     public GameObject bulletSpawnPoint;
     public GameObject bullet;
@@ -25,6 +29,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         PlayerRB = GetComponent<Rigidbody2D>();
+        Anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -33,13 +38,43 @@ public class PlayerController : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
 
-        if(horizontalInput != 0f || verticalInput != 0f)
+        if (horizontalInput != 0f || verticalInput != 0f)
         {
             PlayerRB.velocity = new Vector2(horizontalInput * moveSpeed, verticalInput * moveSpeed);
+            IsWalking = true;
+            Anim.SetBool("IsWalking", IsWalking);
+            if (verticalInput < 0)
+            {
+                //face towards camera
+                IsFacingFront = true;
+                Anim.SetBool("IsFacingFront", IsFacingFront);
+            }
+            else
+            {
+                //face away from camera
+                IsFacingFront = false;
+                Anim.SetBool("IsFacingFront", IsFacingFront);
+            }
+
+            if (horizontalInput < 0)
+            {
+                //face left
+                IsFacingSide = true;
+                Anim.SetBool("IsFacingSide", IsFacingSide);
+            }
+            else
+            {
+                //face right
+                IsFacingSide = false;
+                Anim.SetBool("IsFacingSide", IsFacingSide);
+            }
         }
+
         else
         {
             PlayerRB.velocity = new Vector2(0f, 0f);
+            IsWalking = false;
+            Anim.SetBool("IsWalking", IsWalking);
         }
         
 
