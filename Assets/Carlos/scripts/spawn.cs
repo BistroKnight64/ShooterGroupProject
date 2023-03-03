@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class spawn : MonoBehaviour
 {
-    public GameObject enemyPrefab;
+    public GameObject[] enemyPrefabs;
     public float spawnRange = 9;
     // Start is called before the first frame update
     void Start()
@@ -15,7 +15,8 @@ public class spawn : MonoBehaviour
     {
         for (int i = 0; i < enemiesToSpawn; i++)
         {
-            Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
+            int index = Random.Range(0, enemyPrefabs.Length);
+            Instantiate(enemyPrefabs[index], GenerateSpawnPosition(), enemyPrefabs[index].transform.rotation) ;
         }
     }
     public Vector2 GenerateSpawnPosition()
