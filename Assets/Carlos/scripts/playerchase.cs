@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class chase : MonoBehaviour
+public class playerchase : MonoBehaviour
 {
-    public static event Action<chase> OnEnemyKilled;
+    public static event Action<playerchase> OnEnemyKilled;
     [SerializeField] float health, maxHealth = 3f;
     [SerializeField] float moveSpeed = 5f;
     Rigidbody2D rb;
@@ -24,7 +24,8 @@ public class chase : MonoBehaviour
     {
 
     }
-    private void Update()
+   
+    private void FixedUpdate()
     {
         if (target)
         {
@@ -33,13 +34,9 @@ public class chase : MonoBehaviour
             rb.rotation = angle;
             moveDirection = direction;
         }
-    }
-    private void FixedUpdate()
-    {
         if (target)
         {
             rb.velocity = new Vector2(moveDirection.x, moveDirection.y) * moveSpeed;
-            
         }
     }
 }
