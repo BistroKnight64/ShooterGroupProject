@@ -22,7 +22,7 @@ public class playerchase : MonoBehaviour
     }
     public void TakeDamage(float damageAmount)
     {
-
+        health -= damageAmount;
     }
    
     private void FixedUpdate()
@@ -37,6 +37,13 @@ public class playerchase : MonoBehaviour
         if (target)
         {
             rb.velocity = new Vector2(moveDirection.x, moveDirection.y) * moveSpeed;
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("PlayerBullet"))
+        {
+            TakeDamage(1f);
         }
     }
 }
